@@ -14,12 +14,13 @@ import java.util.HashMap;
 public class DemoApplication {
 
 	public static void main(String[] args) {
-		String basePath = "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos";
+		// String basePath = "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos";
+		String basePath = "/Volumes/1/SpringProject/GalaxyProject/static/Videos";
 		String[] videonames = getVideos(basePath + "/originVideo");
-//		for(String videoname: videonames){
-//			System.out.println("videoname:" + videoname);
-//			encodeVideo(basePath + "/originVideo" + "/" + videoname, basePath + "/4K" + "/" + "4k" + videoname,  3840, 2160);
-//		}
+		for(String videoname: videonames){
+			System.out.println("videoname:" + videoname);
+			encodeVideo(basePath + "/originVideo" + "/" + videoname, basePath + "/4K" + "/" + "4k" + videoname,  3840, 2160);
+		}
 		videonames = getVideos(basePath + "/4K");
 		for(String videoname: videonames){
 			System.out.println("videoname:" + videoname);
@@ -27,7 +28,7 @@ public class DemoApplication {
 		}
 		SpringApplication.run(DemoApplication.class, args);
 	}
-	
+
 	private static String[] getVideos(String path){
 		File f = new File(path);
 		String[] pathnames = f.list();
@@ -40,11 +41,16 @@ public class DemoApplication {
 	private static void addWatermark(String videoname){
 		ProcessExec ps = new ProcessExec();
 		HashMap<String, String> dto = new HashMap<String, String>();
-		dto.put("ffmpeg_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/ffmpeg");
-		dto.put("input_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos/4K/" + videoname);
-		dto.put("video_converted_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos/converted/" + ("watermarked" + videoname));
+		String basePath = "/Volumes/1/SpringProject/GalaxyProject";
+		// dto.put("ffmpeg_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/ffmpeg");
+		dto.put("ffmpeg_path", basePath + "/static/ffmpeg");
+		// dto.put("input_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos/4K/" + videoname);
+		dto.put("input_path", basePath + "/static/Videos/4K/" + videoname);
+		// dto.put("video_converted_path", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/Videos/converted/" + ("watermarked" + videoname));
+		dto.put("video_converted_path", basePath + "/static/Videos/converted/" + ("watermarked" + videoname));
 		// dto.put("logo", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/logo/logo-11.png");
-		dto.put("logo", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/logo/3x/logo-11-3x.png");
+		// dto.put("logo", "/Users/zionhugh/Desktop/SpringProject/GalaxyProject/static/logo/2x/logo-11-2x.png");
+		dto.put("logo", basePath + "/static/logo/2x/logo-11-2x.png");
 		ps.execute(dto);
 	}
 
